@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Identidade Estudantil – UnB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #e8edf2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Sans', sans-serif;
+      gap: 32px;
+      padding: 40px 16px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: #5a6a7a;
+      text-transform: uppercase;
+    }
+
+    .card {
+      width: 600px;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
+      animation: rise 0.7s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      background: #1a3a5c;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-circle img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .header-text {
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .header-text .university {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+    }
+
+    .header-text .sub {
+      font-size: 0.7rem;
+      opacity: 0.75;
+      letter-spacing: 0.06em;
+    }
+
+    .title-band {
+      background: #2e7d32;
+      padding: 7px 18px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    /* ── STUDENT SECTION ─────────────────────────── */
+    .student-section {
+      background: #1a3a5c;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .student-info { flex: 1; }
+
+    .label-small {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: #90b4d4;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .student-name {
+      color: #fff;
+      font-size: 0.88rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .photo-frame {
+      width: 62px;
+      height: 74px;
+      border-radius: 6px;
+      background: #c8d8e8;
+      border: 2px solid #4a8ab8;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-frame svg { width: 34px; height: 34px; opacity: 0.5; }
+
+    /* ── DETAILS GRID ────────────────────────────── */
+    .details {
+      padding: 16px 18px 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 10px;
+    }
+
+    .detail-label {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: #2e7d32;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .detail-value {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #1a2c3d;
+    }
+
+    .detail-item.full { grid-column: 1 / -1; }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #d0dce8, transparent);
+      margin: 0 18px;
+    }
+
+    .card-footer {
+      padding: 14px 18px 18px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .signature-block { flex: 1; }
+
+    .signature-line {
+      width: 110px;
+      height: 28px;
+      border-bottom: 1.5px solid #aaa;
+      margin-bottom: 4px;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      color: #555;
+      padding-bottom: 2px;
+      overflow: hidden;
+    }
+
+    .signature-name {
+      font-size: 0.6rem;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    /* QR Code */
+    .qr-placeholder {
+      width: 62px;
+      height: 62px;
+      border: 2px solid #1a3a5c;
+      border-radius: 6px;
+      display: block;
+      padding: 3px;
+      background: #fff;
+      object-fit: contain;
+    }
+
+    /* Barcode */
+    .barcode {
+      margin: 0 18px 14px;
+      height: 28px;
+      display: flex;
+      align-items: stretch;
+      gap: 1px;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .barcode .bar {
+      flex: 1;
+      background: #1a3a5c;
+    }
+
+    .barcode .bar.thin { flex: 0.4; }
+    .barcode .bar.gap  { background: #fff; }
+
+    /* ── EDIT FORM ───────────────────────────────── */
+    .edit-form {
+      background: #fff;
+      border-radius: 14px;
+      padding: 28px 28px 24px;
+      width: 600px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.09);
+      animation: rise 0.7s 0.1s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .edit-form h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: #1a3a5c;
+      margin-bottom: 18px;
+      letter-spacing: 0.04em;
+    }
+
+    .field { margin-bottom: 14px; }
+
+    .field label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: #2e7d32;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .field input, .field select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #d0dce8;
+      border-radius: 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      color: #1a2c3d;
+      background: #f7f9fb;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field input:focus, .field select:focus {
+      border-color: #1a3a5c;
+      background: #fff;
+    }
+
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .btn {
+      width: 100%;
+      padding: 11px;
+      background: #1a3a5c;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn:hover  { background: #2e5a8a; }
+    .btn:active { transform: scale(0.98); }
+
+    .photo-upload {
+      border: 1.5px dashed #90b4d4;
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 0.75rem;
+      color: #5a7a9a;
+      margin-bottom: 14px;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+
+    .photo-upload:hover { border-color: #1a3a5c; background: #f0f5fa; }
+
+    .photo-upload input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+
+    .photo-preview {
+      width: 48px; height: 56px; object-fit: cover; border-radius: 5px;
+      display: none; margin: 0 auto 4px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- CARD PREVIEW -->
+<div class="card" id="card">
+
+  <div class="card-header">
+    <div class="logo-circle">
+      <img src="download.png" alt="">
+    </div>
+    <div class="header-text">
+      <div class="university">Faculdade Estácio</div>
+      <div class="sub">Universidade Estácio de Sá</div>
+    </div>
+  </div>
+
+  <div class="title-band">Identidade Estudantil</div>
+
+  <div class="student-section">
+    <div class="student-info">
+      <div class="label-small">Discente</div>
+      <div class="student-name" id="disp-name">ALEXA MARIA DA SILVA<br>DE OLIVEIRA PEREIRA</div>
+    </div>
+    <div class="photo-frame" id="disp-photo-frame">
+      <!-- default icon -->
+      <img src="./7354b997-71bc-4243-94ee-bc759981ff6b.jpg" style="width:100%;height:100%;object-fit:cover;"/>
+    </div>
+  </div>
+
+  <div class="details">
+    <div class="detail-item">
+      <div class="detail-label">Matrícula</div>
+      <div class="detail-value" id="disp-matricula">2140299</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">CPF</div>
+      <div class="detail-value" id="disp-cpf">532.954.028-33</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Nível</div>
+      <div class="detail-value" id="disp-nivel">Graduação</div>
+    </div>
+    <div class="detail-item">
+      <div class="detail-label">Curso</div>
+      <div class="detail-value" id="disp-curso">Ciência da Computação</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="card-footer">
+    <div class="signature-block">
+      <div class="signature-line">Henrique D.</div>
+      <div class="signature-name">Henrique Dannes de Melo<br>Secretaria de Administração Acadêmica<br>SAA/UnB</div>
+    </div>
+    <img
+      class="qr-placeholder"
+      id="qr"
+      src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Festacio.br"
+      alt="QR Code para https://estacio.br"
+    />
+  </div>
+</div>
+
+<!-- EDIT FORM -->
+<div class="edit-form">
+  <div class="field">
+    <label>Nome Completo</label>
+    <input type="text" id="inp-name" placeholder="Ex: ALEXA MARIA DA SILVA" value="FERNANDO LIMA ZOCARATO"/>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label>Matrícula</label>
+      <input type="text" id="inp-matricula" placeholder="01234567" value="2140299"/>
+    </div>
+    <div class="field">
+      <label>CPF</label>
+      <input type="text" id="inp-cpf" placeholder="000.000.000-00" value="532.954.028-33"/>
+    </div>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label>Nível</label>
+      <select id="inp-nivel">
+        <option selected>Graduação</option>
+        <option>Mestrado</option>
+        <option>Doutorado</option>
+        <option>Especialização</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Curso</label>
+      <input type="text" id="inp-curso" placeholder="Ex: Direito" value="Ciência da Computação"/>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── Barcode ─── */
+  (function buildBar() {
+    const bc = document.getElementById('barcode');
+    const seq = [1,0,1,1,0,1,0,1,1,1,0,1,0,0,1,1,0,1,1,0,0,1,0,1,1,0,1,0,1,1,0,0,1,0,1];
+    seq.forEach(v => {
+      const b = document.createElement('div');
+      b.className = 'bar' + (v ? '' : ' gap');
+      if (Math.random() > 0.6) b.classList.add('thin');
+      bc.appendChild(b);
+    });
+  })();
+
+  /* ── Photo upload ─── */
+  document.getElementById('photoInput').addEventListener('change', function() {
+    const file = this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const src = e.target.result;
+      // update form preview
+      const prev = document.getElementById('photoPreview');
+      prev.src = src; prev.style.display = 'block';
+      document.getElementById('photoLabel').textContent = 'Foto selecionada ✓';
+      // update card
+      const frame = document.getElementById('disp-photo-frame');
+      frame.innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:cover;"/>`;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  /* ── Update card ─── */
+  function updateCard() {
+    const name = document.getElementById('inp-name').value.toUpperCase();
+    document.getElementById('disp-name').innerHTML = name.replace(' DE ', '<br>DE ').replace(' DA ', '<br>DA ') ;
+    document.getElementById('disp-matricula').textContent = document.getElementById('inp-matricula').value;
+    document.getElementById('disp-cpf').textContent       = document.getElementById('inp-cpf').value;
+    document.getElementById('disp-nivel').textContent     = document.getElementById('inp-nivel').value;
+    document.getElementById('disp-curso').textContent     = document.getElementById('inp-curso').value.toUpperCase();
+
+    // Animate card
+    const card = document.getElementById('card');
+    card.style.animation = 'none';
+    card.offsetHeight;
+    card.style.animation = 'rise 0.5s cubic-bezier(.22,1,.36,1) both';
+  }
+
+  /* Live CPF mask */
+  document.getElementById('inp-cpf').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g,'').slice(0,11);
+    if (v.length > 9)      v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4');
+    else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d+)/,'$1.$2.$3');
+    else if (v.length > 3) v = v.replace(/(\d{3})(\d+)/,'$1.$2');
+    this.value = v;
+  });
+</script>
+</body>
+</html>
